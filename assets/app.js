@@ -33,17 +33,24 @@ $("#add-train-btn").on("click", function (event) {
         nxtArriv: nxtArriv
     });
 
-
-
     //console.log(name);
 
 });
+// var newRow = $("<tr>");
+
+// newRow.append($("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"))
 
 
 database.ref().on("child_added", function (snapshot) {
-    console.log(snapshot.val());
+    console.log("snapshot: " + snapshot.val());
 
-    var row = $("<tr>");
+    var newRow = $("<tr>");
+
+    // newRow.append($("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"), $("<td>test?</td>"))
+
+    var firstTimeConverted = moment(nxtArriv, "HH:mm").subtract(1, "years");
+
+
     var col1 = $("<td>");
     var col2 = $("<td>");
     var col3 = $("<td>");
@@ -51,9 +58,9 @@ database.ref().on("child_added", function (snapshot) {
     col1.text(snapshot.val().name);
     col2.text(snapshot.val().destination);
     col3.text(snapshot.val().frequency);
-    col4.text(snapshot.val().nxtArriv);
-    row.append(col1, col2, col3, col4);
-    $("tbody").append(row);
+    col4.text(snapshot.val().firstTimeConverted);
+    newRow.append(col1, col2, col3, col4);
+    $("#train-table").append(newRow);
 })
 
 
